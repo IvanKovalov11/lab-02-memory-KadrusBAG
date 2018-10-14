@@ -30,7 +30,7 @@ int main() {
 	//прямой проход
 	for (auto i = 16384; i < 9437184; i += date(i)) {
 		auto q = i / 4;
-		auto volatile array = new int[q];
+		auto volatile *array = new int[q];
 		auto lines_count = q / cache_line_size;
 
 		for (auto i = 0; i < lines_count; ++i)
@@ -51,11 +51,12 @@ int main() {
 		double result = 1.0 * (end - start) * nano / w;
 		std::cout << "size : " << 1.0 * i / 1024 << " result : " << result << std::endl;
 		fout_direct << 1.0 * i / 1024 << '\t' << result << std::endl;
+		delete[] array;
 	}
 	//обратный проход
 	for (auto i = 16384; i < 9437184; i += date(i)) {
 		auto q = i / 4;
-		auto volatile array = new int[q];
+		auto volatile *array = new int[q];
 		auto lines_count = q / cache_line_size;
 
 		for (auto i = 1; i < lines_count; ++i)
@@ -76,11 +77,12 @@ int main() {
 		double result = 1.0 * (end - start) * nano / w;
 		std::cout << "size : " << 1.0 * i / 1024 << " result : " << result << std::endl;
 		fout_reverse << 1.0 * i / 1024 << '\t' << result << std::endl;
+		delete[] array;
 	}
 	//случайный обход
 	for (auto i = 16384; i < 9437184; i += date(i)) {
 		auto q = i / 4;
-		auto volatile array = new int[q];
+		auto volatile *array = new int[q];
 		auto lines_count = q / cache_line_size;
 
 		for (auto i = 0; i < lines_count; ++i)
@@ -107,6 +109,7 @@ int main() {
 		double result = 1.0 * (end - start) * nano / w;
 		std::cout << "size : " << 1.0 * i / 1024 << " result : " << result << std::endl;
 		fout_rand << 1.0 * i / 1024 << '\t' << result  << std::endl;
+		delete[] array;
 	}
 	return 0;
 }
